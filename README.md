@@ -80,11 +80,11 @@ results/
 
 ## Contributions
 
-I worked with one other engineer on the technical implementation. My work covered the model-training and evaluation workflows, Qwen fine-tuning, Gemini-assisted data/evaluation steps, experiment organization, and comparison of the recorded results. Another team member acquired the source dataset.
+My contributions covered the technical pipeline shown in the architecture: formatting the dialogue data; fine-tuning Qwen with LoRA/QLoRA to create the SFT baseline (Adapter A); generating candidate responses; integrating Gemini-based Big Five evaluation; preparing preference data for DPO; producing the reward-guided model (Adapter B); assembling prompts with persona rules, retrieved context, and dialogue history; and comparing the two model variants. I worked with one other engineer on the implementation, while another team member acquired the source dataset.
 
-## Running the notebooks
+## Reproducing the experiments
 
-The notebooks were developed in a GPU notebook environment. They use packages including:
+The notebooks document the training and evaluation workflow and were developed in a GPU notebook environment. They are included for technical review and reproducibility, but are not a turnkey application: local datasets, model paths, GPU resources, and API credentials are required. They use packages including:
 
 - Python
 - PyTorch and Hugging Face Transformers
