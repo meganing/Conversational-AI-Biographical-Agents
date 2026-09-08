@@ -68,10 +68,10 @@ Recorded comparison:
 
 ```text
 gemini/
-├── URD3_dataGen.ipynb          # Gemini-assisted data generation
-└── URD3_Train_gemini.ipynb     # Gemini workflow and training/evaluation steps
+├── data_generation.ipynb              # Gemini-assisted data generation
+└── gemini_assisted_training.ipynb     # Gemini workflow and training/evaluation steps
 qwen/
-└── URD3_Train_qwen.ipynb       # Qwen-assisted training/evaluation workflow
+└── qwen_assisted_training.ipynb       # Qwen-assisted training/evaluation workflow
 results/
 ├── gemini_thesis_results_comparison.csv
 ├── gemini_results_chart.png
