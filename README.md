@@ -93,7 +93,7 @@ The notebooks document the training and evaluation workflow and were developed i
 - NumPy, pandas, and SciPy
 - Google's generative-AI client
 
-The notebooks expect local dataset and model paths that are not included here. Before running them, adapt those paths and provide your own API credentials through the notebook runtime or environment variables. Never commit credentials to the repository.
+The notebooks expect local dataset and model paths that are not included here. Before running them, adapt those paths and provide your own API credentials through the notebook runtime or environment variables.
 
 ## What is intentionally excluded
 
