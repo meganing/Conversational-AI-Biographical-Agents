@@ -4,7 +4,7 @@
 
 This project explores how a conversational agent can respond with a stable fictional personality instead of producing generic chatbot answers. The prototype uses Geralt of Rivia as a test character and combines dialogue fine-tuning, retrieved narrative context, and automated personality evaluation.
 
-The repository contains the implementation notebooks and recorded experiment outputs used to compare two training-data and evaluation workflows. It is a research prototype, not a production chatbot or a downloadable model release.
+The repository contains the implementation notebooks and recorded experiment outputs used to compare two training-data workflows. The comparison is not a direct Gemini-versus-Qwen chat-model benchmark: Qwen is the fine-tuned dialogue model in both branches, while Gemini is used for one data-generation path and for automated personality scoring.
 
 ## Problem
 
@@ -14,37 +14,41 @@ Fluent language generation does not automatically produce a convincing character
 - Use relevant story context without inventing details about the character.
 - Measure personality consistency in a way that is more informative than surface-level text similarity.
 
-This project investigates a practical pipeline for addressing those concerns with open-weight language-model fine-tuning and an external personality-scoring loop.
+This project investigates a practical pipeline for addressing those concerns with open-weight language-model fine-tuning and an external personality-scoring loop. It also compares whether the source of the training examples changes the resulting persona alignment.
 
 ## What we built
 
-The system is organized as a closed experimental loop:
+The system is organized as two related experimental workflows:
 
 1. Prepare and annotate character dialogue with Big Five personality dimensions.
-2. Fine-tune `Qwen2.5-7B-Instruct` with parameter-efficient LoRA/QLoRA methods.
-3. Assemble each response from a persona instruction, retrieved narrative context, and recent conversation history.
-4. Generate candidate responses for a small evaluation prompt set.
-5. Use Gemini 2.5 Flash to estimate each response's personality vector.
-6. Use the resulting scores to compare supervised fine-tuning with a preference-optimization stage.
+2. Create training examples through two branches:
+   - Gemini-assisted: Gemini 2.5 Flash generates synthetic training examples.
+   - Qwen-assisted: Qwen generates the training examples locally.
+3. Fine-tune `Qwen2.5-7B-Instruct` with parameter-efficient LoRA/QLoRA methods in each branch.
+4. Generate preference examples and apply a DPO stage to each fine-tuned model.
+5. Assemble responses from persona instructions, retrieved narrative context, and conversation history.
+6. Use Gemini 2.5 Flash as the personality evaluator for both branches.
+7. Compare the SFT and DPO results using distance from the reference Big Five profile.
 
 The context-retrieval component is intended to reduce lore-related hallucination, while the personality loop provides a measurable signal for character drift.
 
 ## Architecture
 
 ```text
-User prompt
-    │
-    ├── Retrieve relevant character or story context
-    │
-    ├── Combine persona rules + retrieved context + dialogue history
-    │
-    └── Qwen2.5-7B-Instruct
-            │
-            └── Candidate response
-                    │
-                    └── Gemini personality evaluator
-                            │
-                            └── Big Five distance and comparison results
+                         Training examples
+                              /          \
+             Gemini-assisted path     Qwen-assisted path
+                              \          /
+                         Qwen2.5-7B-Instruct
+                         SFT -> DPO fine-tuning
+                                    |
+User prompt -> persona rules + retrieved context + dialogue history
+                                    |
+                         Candidate response
+                                    |
+                         Gemini personality evaluator
+                                    |
+                         Big Five distance comparison
 ```
 
 ## Data and evaluation
@@ -55,10 +59,10 @@ The primary metric is Euclidean distance between the evaluator's Big Five vector
 
 Recorded comparison:
 
-| Workflow | SFT distance | DPO distance | Reported change |
+| Training-data workflow | SFT distance | DPO distance | Reported change |
 | --- | ---: | ---: | ---: |
-| Gemini-assisted | 0.6950 | 0.6485 | 6.68% lower |
-| Qwen-assisted | 0.8248 | 0.7139 | 13.45% lower |
+| Gemini-generated examples | 0.6950 | 0.6485 | 6.68% lower |
+| Qwen-generated examples | 0.8248 | 0.7139 | 13.45% lower |
 
 ## Repository structure
 
