@@ -4,7 +4,7 @@
 
 This project explores how a conversational agent can respond with a stable fictional personality instead of producing generic chatbot answers. The prototype uses Geralt of Rivia as a test character and combines dialogue fine-tuning, retrieved narrative context, and automated personality evaluation.
 
-The repository contains the implementation notebooks and recorded experiment outputs used to compare two training-data workflows. The comparison is not a direct Gemini-versus-Qwen chat-model benchmark: Qwen is the fine-tuned dialogue model in both branches, while Gemini is used for one data-generation path and for automated personality scoring.
+The repository contains the implementation notebooks and recorded experiment outputs used to compare two training-data workflows. The comparison is not a direct Gemini-versus-Qwen chat-model benchmark: Qwen is the fine-tuned dialogue model, while Gemini is used to generate data in one experiment and to score personality consistency.
 
 ## Problem
 
@@ -18,38 +18,37 @@ This project investigates a practical pipeline for addressing those concerns wit
 
 ## What we built
 
-The system is organized as two related experimental workflows:
+The system has a core two-stage training pipeline, evaluated through two related experimental workflows:
 
 1. Prepare and annotate character dialogue with Big Five personality dimensions.
 2. Create training examples through two branches:
    - Gemini-assisted: Gemini 2.5 Flash generates synthetic training examples.
    - Qwen-assisted: Qwen generates the training examples locally.
-3. Fine-tune `Qwen2.5-7B-Instruct` with parameter-efficient LoRA/QLoRA methods in each branch.
-4. Generate preference examples and apply a DPO stage to each fine-tuned model.
-5. Assemble responses from persona instructions, retrieved narrative context, and conversation history.
-6. Use Gemini 2.5 Flash as the personality evaluator for both branches.
-7. Compare the SFT and DPO results using distance from the reference Big Five profile.
+3. Fine-tune `Qwen2.5-7B-Instruct` with parameter-efficient LoRA/QLoRA methods to create **Adapter A**, the supervised baseline.
+4. Generate candidate responses from Adapter A and have Gemini 2.5 Flash score their Big Five personality consistency.
+5. Convert those scores into preference data and use an offline DPO stage to create **Adapter B**, the reward-guided version.
+6. Assemble responses from persona instructions, retrieved narrative context, and conversation history.
+7. Compare Adapter A and Adapter B using the same prompts and the same personality-distance metric.
 
 The context-retrieval component is intended to reduce lore-related hallucination, while the personality loop provides a measurable signal for character drift.
 
 ## Architecture
 
-```text
-                         Training examples
-                              /          \
-             Gemini-assisted path     Qwen-assisted path
-                              \          /
-                         Qwen2.5-7B-Instruct
-                         SFT -> DPO fine-tuning
-                                    |
-User prompt -> persona rules + retrieved context + dialogue history
-                                    |
-                         Candidate response
-                                    |
-                         Gemini personality evaluator
-                                    |
-                         Big Five distance comparison
-```
+![Training, feedback, and comparison architecture](docs/architecture.png)
+
+The diagram shows the core model-development and inference flow:
+
+1. A formatted dialogue script is used for supervised fine-tuning, producing Adapter A.
+2. Adapter A generates candidate dialogue.
+3. Gemini 2.5 Flash evaluates the candidates against the target Big Five profile.
+4. The evaluation is converted into a personality-consistency reward or preference signal.
+5. DPO updates the model and produces Adapter B.
+6. At inference time, the same user prompt is enriched with retrieved narrative context, persona rules, and dialogue history.
+7. Model A (Adapter A) and Model B (Adapter B) each generate a response for comparison.
+
+Gemini is the evaluator in this architecture; it is not the final conversational model. Both Model A and Model B are Qwen-based variants. The figure uses “PPO/DPO” as a general label for reward-guided optimization, but the implementation in this repository uses DPO with prepared preference data rather than an online PPO loop.
+
+The Gemini-assisted and Qwen-assisted data-generation paths are separate experimental branches that occur before fine-tuning. They test whether the source of the synthetic training examples affects the final Qwen model; they are not a Gemini-versus-Qwen comparison at inference time.
 
 ## Data and evaluation
 
