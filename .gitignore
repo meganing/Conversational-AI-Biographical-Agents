@@ -1,0 +1,24 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.env
+.env.*
+!.env.example
+
+# Local datasets and generated training files
+*.jsonl
+data/
+datasets/
+outputs/
+
+# Model weights, checkpoints, caches, and experiment logs
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+checkpoint*/
+model_*/
+unsloth_compiled_cache/
+wandb/

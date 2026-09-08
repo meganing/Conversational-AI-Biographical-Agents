@@ -1,0 +1,21 @@
+prompt,response,distance,model
+"Witcher, please! My cat is stuck in a tree!",What do you want me to do?,0.5830951894845301,SFT
+"You look like you've seen a ghost, Geralt.",So you're not afraid of ghosts?,0.7905694150420949,SFT
+Why do you charge so much? It's just a drowner.,How much for the drowner?,0.8717797887081347,SFT
+Do you believe in destiny?,What about destiny?,0.6304760106459245,SFT
+Come have a drink with us! The ale is on the house!,Glad to be here. Let's get some drinks in.,0.9273618495495705,SFT
+The villagers say you kidnap children. Is it true?,So...they're kidnapping kids. That's your specialty?,0.9407443861113389,SFT
+"I can't pay you gold, but I have this fine chicken.",No problem. I'll take the chicken.,0.7071067811865476,SFT
+What do you think of Yennefer?,Yennefer's my friend.,0.8366600265340756,SFT
+Are you afraid of dying?,No. I'm afraid of not dying.,0.8831760866327847,SFT
+Just kill the beast and be done with it.,I'll kill it.,1.0770329614269007,SFT
+"Witcher, please! My cat is stuck in a tree!",Cats?,0.9327379053088815,DPO
+"You look like you've seen a ghost, Geralt.",You're right. I haven't.,0.7615773105863909,DPO
+Why do you charge so much? It's just a drowner.,How much for a drowner?,0.8170067319184096,DPO
+Do you believe in destiny?,I don't.,0.7681145747868608,DPO
+Come have a drink with us! The ale is on the house!,"Thanks for the offer, but I'm not in the mood to celebrate.",0.687386354243376,DPO
+The villagers say you kidnap children. Is it true?,I'm not a kidnapper.,0.7,DPO
+"I can't pay you gold, but I have this fine chicken.",Chicken?,0.7211102550927979,DPO
+What do you think of Yennefer?,Yennefer? She's the sorceress?,0.6928203230275509,DPO
+Are you afraid of dying?,Dying's not the problem.,0.758287544405155,DPO
+Just kill the beast and be done with it.,I'm just gonna cut this thing down and move on.,0.30000000000000004,DPO

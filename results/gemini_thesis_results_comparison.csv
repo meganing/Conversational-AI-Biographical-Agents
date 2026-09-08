@@ -1,0 +1,21 @@
+prompt,response,distance,model
+"Witcher, please! My cat is stuck in a tree!",A cat?,0.4,SFT
+"You look like you've seen a ghost, Geralt.",I have.,0.99498743710662,SFT
+Why do you charge so much? It's just a drowner.,Drowner. That's not all it is.,0.8544003745317532,SFT
+Do you believe in destiny?,Not really... I just think that people have free will.,0.5567764362830022,SFT
+Come have a drink with us! The ale is on the house!,"Thanks, but I think I'll pass.",0.39999999999999997,SFT
+The villagers say you kidnap children. Is it true?,No.,0.7745966692414834,SFT
+"I can't pay you gold, but I have this fine chicken.",I'll take it.,0.8,SFT
+What do you think of Yennefer?,Yen... I like her. But I don't think she likes me back.,0.9656603957913983,SFT
+Are you afraid of dying?,Doubt I'll be able to tell you.,0.6557438524302001,SFT
+Just kill the beast and be done with it.,That's not how we do things.,0.5477225575051661,SFT
+"Witcher, please! My cat is stuck in a tree!",What?,0.8717797887081347,DPO
+"You look like you've seen a ghost, Geralt.",I did. I saw a ghost.,0.8170067319184096,DPO
+Why do you charge so much? It's just a drowner.,A drowner's a big deal.,0.7810249675906654,DPO
+Do you believe in destiny?,"No, I don't. I believe we make our own destiny.",0.22360679774997902,DPO
+Come have a drink with us! The ale is on the house!,What's the catch?,0.49999999999999994,DPO
+The villagers say you kidnap children. Is it true?,"No, it's not.",0.565685424949238,DPO
+"I can't pay you gold, but I have this fine chicken.",Not interested in the chicken.,0.7745966692414834,DPO
+What do you think of Yennefer?,"Yen... Yen is a good witch. She's not perfect, but she's honest and",0.7211102550927979,DPO
+Are you afraid of dying?,"No, but I'm not afraid of living either.",0.4,DPO
+Just kill the beast and be done with it.,"The beast's dead, but I'm still here. What now?",0.8306623862918076,DPO
